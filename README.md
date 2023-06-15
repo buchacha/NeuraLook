@@ -31,6 +31,7 @@ Self-Correction-Human-Parsing
 3) Скачать **[чекпоинт](https://drive.google.com/file/d/1ruJg4lqR_jgQPj-9K0PP-L2vJERYOxLP/view?usp=sharing)** нейронной сети 
 
 4) Запустить `process.py`, указав необходимые параметры:
+
     - --model-restore - путь до чекпоинта
     - --input-dir - папка со входными изображениями
     - --output-dir - папка для сохранения получившихся масок
@@ -45,8 +46,13 @@ python process.py --model-restore --input-dir --output-dir --cont
 Программа для создания запросов и получения изображений от [Stable Diffusion API](http://platform.stability.ai/).
 
 Для работы необходимо: сгенерировать ключ к API на платформе [Dreamstudio](http://dreamstudio.ai/) и поместить его в файл `config` в той же директории, что и файл `api_req_wo_async.py`, а затем запустить программу, указав необходимые параметры:
+
     - --input-dir - папка со входными изображениями
     - --mask-dir - папка c масками для изображений
     - --cont - папка для хранения обработанных изображений
     - --output-dir - папка для хранения изображений, полученных от Stable Diffusion API
     - --search - папка для хранения изображений для поискового запроса по фотке
+
+```shell
+python api_req_wo_async.py --input-dir --mask-dir --output-dir --cont --search
+```
