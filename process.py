@@ -45,9 +45,8 @@ def remove_head_from_mask(mask, head_mask):
     """
     mask_ar = np.array(mask)
     head_mask_ar = np.array(head_mask)
-    mask_without_head_ar = np.where(mask_ar == head_mask_ar, 0, 255)
-    mask_without_head_ar = np.asarray(mask_without_head_ar, dtype=np.uint8)
-    mask_without_head_ar = np.where(mask_without_head_ar == mask_ar, 0, 255)
+    mask_without_head_ar = mask_ar - head_mask_ar
+    mask_without_head_ar = np.where(mask_without_head_ar > 1, 0, 255)
     mask_without_head_ar = np.asarray(mask_without_head_ar, dtype=np.uint8)
     mask_without_head = Image.fromarray(mask_without_head_ar, mode='RGB')
     return mask_without_head
@@ -66,15 +65,14 @@ def preproc_img_size(img):
     min_size_index = np.argmin(img.size)
     side_ratio = img.size[min_size_index] / img.size[min_size_index-1]
     new_size = find_new_size(side_ratio)
-    
+    m = [0, 0]
     if img.size[min_size_index] > new_size[0]:
-        m = [0, 0]
         m[min_size_index] = new_size[0]
         m[min_size_index-1] = new_size[1]
         return img.resize((m))
     else:
-        m[min_size_index] = m[min_size_index]//64*64
-        m[min_size_index-1] = new_size[1]//64*64
+        m[0] = img.size[0]//64*64
+        m[1] = img.size[1]//64*64
         return img.resize((m))
    
 
